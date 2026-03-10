@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../../core/constants/colors.dart';
-import '../screens/member_login_screen.dart';
+import '../../../../core/constants/colors.dart';
+import '../../screens/member_login_screen.dart';
 
 // ✅ Import your separated screens here (Update paths as needed)
 import 'active_dashboard_screen.dart';

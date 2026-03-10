@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 
 import '../logic/auth_controller.dart';
-import '../../member/dashboard/dashboard_screen.dart';
+import '../../member/dashboard/screens/dashboard_screen.dart';
 import '../../member/new_member_registration/screens/personal_info_screen.dart';
 import 'package:member_management_app/routes/app_routes.dart';
 
