@@ -8,6 +8,7 @@ class DharmaAppBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback? onPrimaryAction;
   final Widget? customAction;
   final String? title;
+  final bool hasNotifications; // ✅ Added boolean for notification dot
 
   const DharmaAppBar({
     super.key,
@@ -15,6 +16,7 @@ class DharmaAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.onPrimaryAction,
     this.customAction,
     this.title,
+    this.hasNotifications = false, // ✅ Defaults to false
   });
 
   @override
@@ -152,9 +154,60 @@ class DharmaAppBar extends StatelessWidget implements PreferredSizeWidget {
         );
 
       case DharmaAppBarType.dashboard:
-        return IconButton(
-          icon: const Icon(Icons.menu, color: AppColors.primary),
-          onPressed: onPrimaryAction,
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // ✅ NOTIFICATION ICON (Tightly packed IconButton)
+            IconButton(
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(),
+              style: IconButton.styleFrom(
+                tapTargetSize: MaterialTapTargetSize
+                    .shrinkWrap, // 🔥 Kills the default invisible padding
+              ),
+              onPressed: () {
+                // TODO: Open Notifications
+              },
+              icon: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  const Icon(
+                    Icons.notifications_outlined,
+                    color: Color(0xFF2A2A2A),
+                    size: 26,
+                  ),
+                  if (hasNotifications)
+                    Positioned(
+                      right: 2,
+                      top: 2,
+                      child: Container(
+                        width: 10,
+                        height: 10,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFB3261E),
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white, width: 1.5),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+
+            const SizedBox(width: 10), // ✅ Hardcoded 4 pixel gap
+            // ✅ MENU ICON (Tightly packed IconButton)
+            IconButton(
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(),
+              style: IconButton.styleFrom(
+                tapTargetSize: MaterialTapTargetSize
+                    .shrinkWrap, // 🔥 Kills the default invisible padding
+              ),
+              icon: const Icon(Icons.menu, color: AppColors.primary, size: 28),
+              onPressed: onPrimaryAction,
+            ),
+          ],
         );
 
       case DharmaAppBarType.custom:
